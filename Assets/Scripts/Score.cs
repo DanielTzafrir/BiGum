@@ -5,52 +5,69 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public GameObject[] down;
-    public GameObject[] up;
-    public int indxDown = 0;
-    public int indxUp = 0;
+    [SerializeField]
+    private GameObject[] bubblesArr;
+    [SerializeField]
+    private GameObject panel;
+    [SerializeField]
+    private GameObject redBubbleWhiteOutline;
+    [SerializeField]
+    private GameObject plus1;
 
-    public GameObject panelDown;
-    public GameObject redBubbleWhiteOutlineDown;
-    public GameObject plus1Down;
+    private int idx = 0;
 
-    public void DownGetPoint()
+    public void GetPoint()
     {
-        if (indxDown < down.Length)
+        if (idx < bubblesArr.Length)
         {
             //activate the animation
-            redBubbleWhiteOutlineDown.GetComponent<Animator>().SetTrigger("addPointDown");
-            plus1Down.GetComponent<Animator>().SetTrigger("addPointDown");
+            redBubbleWhiteOutline.GetComponent<Animator>().SetTrigger("addPoint");
+            plus1.GetComponent<Animator>().SetTrigger("addPoint");
 
-            StartCoroutine(Delayed2sec());
-            StartCoroutine(Delayed1sec());
+            StartCoroutine(Delayed2secDown());
+            StartCoroutine(Delayed1secDown());
         }
         else
         {
-            Debug.Log("out of bounds down socre");
+            Debug.Log("out of bounds down socre"); // player won the GAME
         }
         
     }
 
-    private IEnumerator Delayed2sec()
+    private IEnumerator Delayed2secDown()
     {
         // Wait for 2 seconds
         yield return new WaitForSeconds(2f);
 
         // Move the animation objects to the next bubble
-        Vector2 currentPosition = panelDown.GetComponent<RectTransform>().anchoredPosition;
-        currentPosition.y += 29f;
-        panelDown.GetComponent<RectTransform>().anchoredPosition = currentPosition;
+        if (panel.tag == "Down")
+        {
+            Vector2 currentPosition = panel.GetComponent<RectTransform>().anchoredPosition;
+
+            currentPosition.y += 29f;
+            panel.GetComponent<RectTransform>().anchoredPosition = currentPosition;
+        }
+        else
+        {
+            Vector2 currentPosition = panel.GetComponent<RectTransform>().anchoredPosition;
+
+            currentPosition.y -= 29f;
+            panel.GetComponent<RectTransform>().anchoredPosition = currentPosition;
+        }
+        
+        
 
     }
-    private IEnumerator Delayed1sec()
+    private IEnumerator Delayed1secDown()
     {
         // Wait for 1 second
         yield return new WaitForSeconds(1f);
 
         //change the colour of the white bubbles to red (for the rest of the game)
-        down[indxDown].GetComponent<Image>().color = new Color32(205, 57, 101, 255);
-        indxDown++;
+        bubblesArr[idx].GetComponent<Image>().color = new Color32(205, 57, 101, 255);
+        idx++;
 
     }
+
+    
 }
