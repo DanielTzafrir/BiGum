@@ -8,13 +8,15 @@ public class Gum : MonoBehaviour
     public GameObject gum;
     public GameObject text;
     public GameObject opponent;
+    public Score MyScore;
+    private Score enemyScore;
     public bool isBlowingUp = true;
     public bool RoundOn = true; // I should make sure that after the start 3..2..1 it would change from false to true
     public bool isTouched = false;
     private RectTransform rec;
     private Animator GumAni;
     private float cmFloat;
-    private double cmDouble;
+    public double cmDouble;
     private bool canUpdate;
 
     private void Start()
@@ -22,6 +24,14 @@ public class Gum : MonoBehaviour
         rec = gum.GetComponent<RectTransform>();
         GumAni = gum.GetComponent<Animator>();
         canUpdate = true;
+        if (tag == "Down")
+        {
+            enemyScore = GameObject.Find("BGup").GetComponent<Score>();
+        }
+        else
+        {
+            enemyScore = GameObject.Find("BGdown").GetComponent<Score>();
+        }
     }
     private void Update()
     {
@@ -61,10 +71,36 @@ public class Gum : MonoBehaviour
         GumAni.enabled = false; // stop the gum from moving
         Gum oponentGum = opponent.GetComponent<Gum>();
         bool oponentTouched = oponentGum.isTouched;
+
+        // check if the opponent finished. if did - finish the game. else - do nothing
         if (oponentTouched)
         {
             Debug.Log("finish game");
+            CompareVariables(oponentGum);
+            // finish the round
         }
-        // check if the opponent finished. if did - finish the game. else - do nothing
+        
+    }
+
+    public void CompareVariables(Gum otherObject)
+    {
+        if (cmDouble > otherObject.cmDouble)
+        {
+            Debug.Log("This object has a higher variable value!");
+            // Win round
+            MyScore.GetPoint();
+            
+        }
+        else if (cmDouble < otherObject.cmDouble)
+        {
+            Debug.Log("Other object has a higher variable value!");
+            // lose round
+            enemyScore.GetPoint();
+        }
+        else
+        {
+            Debug.Log("Both objects have the same variable value!");
+            // a tie. no points
+        }
     }
 }
