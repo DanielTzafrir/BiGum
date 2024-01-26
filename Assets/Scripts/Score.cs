@@ -15,26 +15,34 @@ public class Score : MonoBehaviour
     private GameObject plus1;
 
     private int idx = 0;
-
+    public bool gameIsOn = true;
     public void GetPoint()
     {
-        if (idx < bubblesArr.Length)
+        if (idx < bubblesArr.Length -1)
         {
             //activate the animation
             redBubbleWhiteOutline.GetComponent<Animator>().SetTrigger("addPoint");
             plus1.GetComponent<Animator>().SetTrigger("addPoint");
 
-            StartCoroutine(Delayed2secDown());
-            StartCoroutine(Delayed1secDown());
+            StartCoroutine(UpdatePositionOfScoreBubble());
+            StartCoroutine(UpdateColorOfScoreBubble());
         }
         else
         {
+            //activate the animation
+            redBubbleWhiteOutline.GetComponent<Animator>().SetTrigger("addPoint");
+            plus1.GetComponent<Animator>().SetTrigger("addPoint");
+
+            StartCoroutine(UpdatePositionOfScoreBubble());
+            StartCoroutine(UpdateColorOfScoreBubble());
+
             Debug.Log("out of bounds down socre"); // player won the GAME
+            StartCoroutine(finishGame());
         }
         
     }
 
-    private IEnumerator Delayed2secDown()
+    private IEnumerator UpdatePositionOfScoreBubble()
     {
         // Wait for 2 seconds
         yield return new WaitForSeconds(2f);
@@ -58,7 +66,7 @@ public class Score : MonoBehaviour
         
 
     }
-    private IEnumerator Delayed1secDown()
+    private IEnumerator UpdateColorOfScoreBubble()
     {
         // Wait for 1 second
         yield return new WaitForSeconds(1f);
@@ -69,5 +77,13 @@ public class Score : MonoBehaviour
 
     }
 
-    
+    private IEnumerator finishGame()
+    {
+        Debug.Log("1 " + gameIsOn);
+        yield return new WaitForSeconds(2f);
+        Debug.Log("2");
+        gameIsOn = false;
+    }
+
+
 }

@@ -1386,7 +1386,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gum: {fileID: 1380211296}
   text: {fileID: 1628614923}
-  opponent: {fileID: 1420210816}
   Lose: {fileID: 1086818129}
   MyScore: {fileID: 465889541}
   RoundOn: 1
@@ -1394,6 +1393,7 @@ MonoBehaviour:
   cmDouble: 0
   enemyGum: {fileID: 230405984}
   enemyLose: {fileID: 1347616537}
+  enemyText: {fileID: 105704490}
 --- !u!114 &465889541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3419,7 +3419,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gum: {fileID: 230405984}
   text: {fileID: 105704490}
-  opponent: {fileID: 465889536}
   Lose: {fileID: 1347616537}
   MyScore: {fileID: 1420210821}
   RoundOn: 1
@@ -3427,6 +3426,7 @@ MonoBehaviour:
   cmDouble: 0
   enemyGum: {fileID: 1380211296}
   enemyLose: {fileID: 1086818129}
+  enemyText: {fileID: 1628614923}
 --- !u!114 &1420210821
 MonoBehaviour:
   m_ObjectHideFlags: 0
